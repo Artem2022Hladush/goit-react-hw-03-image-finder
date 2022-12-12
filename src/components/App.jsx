@@ -23,9 +23,6 @@ render() {
     <>
     <Searchbar />
     {isLoading && <Loader/>}
-    {this.state.photo && (
-      <div>тут буде фото</div>
-    )}
     </>
     );
 }
