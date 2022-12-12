@@ -1,6 +1,7 @@
-import {ImSearch} from "react-icons/is"
+import {HiSearch} from "react-icons/hs"
 import React, { Component } from "react";
 import css from "../Searchbar/Searchbar.module.css"
+import PropTypes from "prop-types"
 
 
 
@@ -28,7 +29,7 @@ class Searchbar extends Component{
 			<header className={css.searchbar}>
 		<form onSubmit={this.handleSublmit} className={css.searchform}>
 			<button type="submit" className={css.searchform__button}>
-				<ImSearch/>
+				<HiSearch />
 				<span className={css.searchform_button_label}>Search</span>
 			</button>
 	
