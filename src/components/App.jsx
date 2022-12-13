@@ -1,17 +1,21 @@
 import React,  { Component } from "react";
+import api from "./service/api";
 import Searchbar from "./Searchbar/Searchbar";
 import Loader from "./Loader/Loader";
 
 
+
 class App extends  Component{
   state = {
+    page: 1,
+    query: '',
     photo: [],
     isLoading: false,
   }
 
-  handleFormSubmit = photo =>{
-    console.log(photo);
-    this.setState({photo: []})
+  handleFormSubmit = name =>{
+    console.log(name);
+    this.setState({photo: [], query: name, page:1})
   }
 
 // componentDidMount() {
