@@ -1,7 +1,10 @@
 import React,  { Component } from "react";
+import Notiflix from "notiflix";
 import api from "./service/api";
 import Searchbar from "./Searchbar/Searchbar";
 import Loader from "./Loader/Loader";
+import Button from "./Button/Button";
+import ImageGallery from "./ImageGallery/ImageGallery";
 
 
 
@@ -13,18 +16,33 @@ class App extends  Component{
     isLoading: false,
   }
 
-  handleFormSubmit = name =>{
+  handleFormSubmit = (name) =>{
     console.log(name);
     this.setState({photo: [], query: name, page:1})
   }
 
-// componentDidMount() {
-//   this.setState({isLoading: true})
-//   fetch('https://pixabay.com/api/?q=cat&page=1&key=32019120-f6c917bb65a52104f5b17c554&image_type=photo&orientation=horizontal&per_page=12')
-//   .then(res => res.json())
-//   .then(photo => this.setState({photo}))
-//   .finally(() => this.setState({isLoading:false}))
-// }
+async componentDidUpdate(_, prevState) {
+  if (prevState.page !== this.state.page || 
+    prevState.query !== this.state.query) {
+      const {query, page}=this.state;
+      this.setState({ isLoading: true });
+
+      const response = await api
+        .fetchApi(query, page)
+        .catch(error => this.setState({ error }))
+        .finally( ()=>this.setState({ isLoading: false }))
+        if (response.data.totalHits === 0)
+        {
+          Notiflix.Notify.failure('Enter correct request');
+          this.setState({ images: [] });
+          return;
+        }
+    }
+}
+
+loadMore=()=> {
+  this.setState(prevState=> ({page: prevState.page +1}))
+}
 
 render() {
   const {isLoading} = this.state;
@@ -32,6 +50,8 @@ render() {
     <>
     <Searchbar onSubmit={this.handleFormSubmit}/>
     {isLoading && <Loader/>}
+    <Button onLoadMore={this.loadMore}/>
+    <ImageGallery items={this.state.photo}/>
     </>
     );
 }
