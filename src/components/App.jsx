@@ -14,6 +14,8 @@ class App extends  Component{
     query: '',
     photo: [],
     isLoading: false,
+    totalPages: 0,
+
   }
 
   handleFormSubmit = (name) =>{
@@ -31,12 +33,19 @@ async componentDidUpdate(_, prevState) {
         .fetchApi(query, page)
         .catch(error => this.setState({ error }))
         .finally( ()=>this.setState({ isLoading: false }))
+        console.log(response.data)
         if (response.data.totalHits === 0)
         {
           Notiflix.Notify.failure('Enter correct request');
           this.setState({ images: [] });
           return;
         }
+        response.data.hits.forEach(({id,webformatURL, tags, largeImageURL})=> {
+          return this.setState(prev=> ({
+            photo:[...prev.photo, {id,webformatURL, tags, largeImageURL}],
+            totalPages: Math.ceil(response.datatotalHits/12)
+          }))
+        })
     }
 }
 
@@ -50,8 +59,9 @@ render() {
     <>
     <Searchbar onSubmit={this.handleFormSubmit}/>
     {isLoading && <Loader/>}
-    <Button onLoadMore={this.loadMore}/>
     <ImageGallery items={this.state.photo}/>
+    <Button onLoadMore={this.loadMore}/>
+    
     </>
     );
 }

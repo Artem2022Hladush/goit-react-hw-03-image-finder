@@ -1,4 +1,4 @@
-// import {HiSearch} from "react-icons/hs"
+import {BsSearch} from "react-icons/bs"
 import React, { Component } from "react";
 import css from "../Searchbar/Searchbar.module.css"
 import PropTypes from "prop-types"
@@ -29,15 +29,15 @@ class Searchbar extends Component{
 	}
 	render() {
 		return (
-			<header className={css.searchbar}>
-		<form onSubmit={this.handleSublmit} className={css.searchform}>
-			<button type="submit" className={css.searchform__button}>
-				{/* <HiSearch /> */}
-				<span className={css.searchform_button_label}>Search</span>
+			<header className={css.Searchbar}>
+		<form onSubmit={this.handleSublmit} className={css.SearchForm}>
+			<button type="submit" className={css. SearchForm__button}>
+				<BsSearch />
+				<span className={css.SearchForm_button_label}></span>
 			</button>
 	
 			<input
-			className={css.searchsorm__input}
+			className={css.SearchForm__input}
 			type="text"
 			value={this.state.inputText}
 			autoComplete="off"
