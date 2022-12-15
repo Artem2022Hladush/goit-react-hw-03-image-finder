@@ -5,6 +5,7 @@ import Searchbar from "./Searchbar/Searchbar";
 import Loader from "./Loader/Loader";
 import Button from "./Button/Button";
 import ImageGallery from "./ImageGallery/ImageGallery";
+import Modal from "./Modal/Modal";
 
 
 
@@ -15,12 +16,9 @@ class App extends  Component{
     photo: [],
     isLoading: false,
     totalPages: 0,
+    showModal: false,
+    largeImage: '',
 
-  }
-
-  handleFormSubmit = (name) =>{
-    console.log(name);
-    this.setState({photo: [], query: name, page:1})
   }
 
 async componentDidUpdate(_, prevState) {
@@ -49,19 +47,35 @@ async componentDidUpdate(_, prevState) {
     }
 }
 
+handleFormSubmit = (name) =>{
+  console.log(name);
+  this.setState({photo: [], query: name, page:1})
+}
+
+
 loadMore=()=> {
   this.setState(prevState=> ({page: prevState.page +1}))
 }
 
+togleModal=()=> {
+  this.setState(state => ({
+    showModal: !state.showModal
+  }))
+}
+
+onClick=(photo)=>{
+  this.setState({largeImage:photo,showModal:true})
+}
+
 render() {
-  const {isLoading} = this.state;
+  const {isLoading, showModal, largeImage, photo,} = this.state;
   return (
     <>
     <Searchbar onSubmit={this.handleFormSubmit}/>
     {isLoading && <Loader/>}
-    <ImageGallery items={this.state.photo}/>
+    {showModal && <Modal src={largeImage} onClose={this.togleModal}/>}
+    <ImageGallery items={photo} onClick={this.onClick}/>
     <Button onLoadMore={this.loadMore}/>
-    
     </>
     );
 }
