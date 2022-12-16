@@ -12,12 +12,12 @@ import Modal from "./Modal/Modal";
 class App extends  Component{
   state = {
     page: 1,
-    query: '',
+    query: ' ',
     photo: [],
     isLoading: false,
     totalPages: 0,
     showModal: false,
-    largeImage: '',
+    largeImage: ' ',
 
   }
 
@@ -75,7 +75,7 @@ render() {
     {isLoading && <Loader/>}
     {showModal && <Modal src={largeImage} onClose={this.togleModal}/>}
     <ImageGallery items={photo} onClick={this.onClick}/>
-    {photo.length!==0 && totalPages>page && ( <Button onLoadMore={this.loadMore}/>)}
+    {photo.length!==0 && totalPages>page && <Button onLoadMore={this.loadMore}/>}
     </>
     );
 }
