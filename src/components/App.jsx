@@ -68,14 +68,15 @@ onClick=(photo)=>{
 }
 
 render() {
-  const {isLoading, showModal, largeImage, photo,totalPages, page} = this.state;
+  const {isLoading, showModal, largeImage, photo,} = this.state;
   return (
     <>
     <Searchbar onSubmit={this.handleFormSubmit}/>
     {isLoading && <Loader/>}
     {showModal && <Modal src={largeImage} onClose={this.togleModal}/>}
     <ImageGallery items={photo} onClick={this.onClick}/>
-    {photo.length!==0 && totalPages>page && <Button onLoadMore={this.loadMore}/>}
+    {photo.length!==0 &&  <Button onLoadMore={this.loadMore}/>}
+
     </>
     );
 }
